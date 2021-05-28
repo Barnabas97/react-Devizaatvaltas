@@ -7,12 +7,29 @@ class Converter extends React.Component {
     this.state = {
       result: null,
       fromCurrency: "USD",
-      toCurrency: "GBP",
+      toCurrency: "HUF",
       amount: 1,
       currencies: []
     };
   }
- 
+  componentDidMount() {
+    axios
+      .get("http://api.exchangerate.host/latest?base=huf")
+      .then(response => {
+        const currencyAr = ["HUF"];
+        for (const key in response.data.rates) {
+          currencyAr.push(key);
+        }
+        this.setState({ currencies: currencyAr });
+      })
+      .catch(err => {
+        
+      });
+  }
+  
+        </div>
+      </div>
+    );
   }
 }
 export default Converter;
